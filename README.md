@@ -13,7 +13,7 @@ this js just solves the issue
 
 copied from [docs](https://github.com/EsotericSoftware/spine-runtimes/blob/3.6/spine-ts/canvas/example/index.html#L69)
 
-#### cocos creator 2.4.6:
+#### cocos creator 2.4.6 only:
 - try following script inside `onLoad` function
 ```javascript
 var t="xingxiang.bin",animationName="Idle";
