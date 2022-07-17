@@ -56,7 +56,7 @@ function ex(spine) {
 				var darkColor = input.readInt32();
 				if (darkColor != -1)
 					spine.Color.rgb888ToColor(data.darkColor = new spine.Color(), darkColor);
-				data.attachmentName = input.readStringRef();
+				data.attachmentName = input.readString();
 				data.blendMode = SkeletonBinary.BlendModeValues[input.readInt(true)];
 				skeletonData.slots.push(data);
 			}
@@ -150,7 +150,7 @@ function ex(spine) {
 			this.linkedMeshes.length = 0;
 			n = input.readInt(true);
 			for (var i = 0; i < n; i++) {
-				var data = new spine.EventData(input.readStringRef());
+				var data = new spine.EventData(input.readString());
 				data.intValue = input.readInt(false);
 				data.floatValue = input.readFloat();
 				data.stringValue = input.readString();
@@ -176,7 +176,7 @@ function ex(spine) {
 				skin = new spine.Skin("default");
 			}
 			else {
-				skin = new spine.Skin(input.readStringRef());
+				skin = new spine.Skin(input.readString());
 				skin.bones.length = input.readInt(true);
 				for (var i = 0, n = skin.bones.length; i < n; i++)
 					skin.bones[i] = skeletonData.bones[input.readInt(true)];
@@ -191,7 +191,7 @@ function ex(spine) {
 			for (var i = 0; i < slotCount; i++) {
 				var slotIndex = input.readInt(true);
 				for (var ii = 0, nn = input.readInt(true); ii < nn; ii++) {
-					var name_3 = input.readStringRef();
+					var name_3 = input.readString();
 					var attachment = this.readAttachment(input, skeletonData, skin, slotIndex, name_3, nonessential);
 					if (attachment != null)
 						skin.setAttachment(slotIndex, name_3, attachment);
@@ -201,14 +201,14 @@ function ex(spine) {
 		};
 		SkeletonBinary.prototype.readAttachment = function (input, skeletonData, skin, slotIndex, attachmentName, nonessential) {
 			var scale = this.scale;
-			var name = input.readStringRef();
+			var name = input.readString();
 			if (name == null)
 				name = attachmentName;
 			var typeIndex = input.readByte();
 			var type = SkeletonBinary.AttachmentTypeValues[typeIndex];
 			switch (type) {
 				case spine.AttachmentType.Region: {
-					var path = input.readStringRef();
+					var path = input.readString();
 					var rotation = input.readFloat();
 					var x = input.readFloat();
 					var y = input.readFloat();
@@ -249,7 +249,7 @@ function ex(spine) {
 					return box;
 				}
 				case spine.AttachmentType.Mesh: {
-					var path = input.readStringRef();
+					var path = input.readString();
 					var color = input.readInt32();
 					var vertexCount = input.readInt(true);
 					var uvs = this.readFloatArray(input, vertexCount << 1, 1);
@@ -285,10 +285,10 @@ function ex(spine) {
 					return mesh;
 				}
 				case spine.AttachmentType.LinkedMesh: {
-					var path = input.readStringRef();
+					var path = input.readString();
 					var color = input.readInt32();
-					var skinName = input.readStringRef();
-					var parent_4 = input.readStringRef();
+					var skinName = input.readString();
+					var parent_4 = input.readString();
 					var inheritDeform = input.readBoolean();
 					var width = 0, height = 0;
 					if (nonessential) {
@@ -424,7 +424,7 @@ function ex(spine) {
 							var timeline = new spine.AttachmentTimeline(frameCount);
 							timeline.slotIndex = slotIndex;
 							for (var frameIndex = 0; frameIndex < frameCount; frameIndex++)
-								timeline.setFrame(frameIndex, input.readFloat(), input.readStringRef());
+								timeline.setFrame(frameIndex, input.readFloat(), input.readString());
 							timelines.push(timeline);
 							duration = Math.max(duration, timeline.frames[frameCount - 1]);
 							break;
@@ -582,7 +582,7 @@ function ex(spine) {
 				for (var ii = 0, nn = input.readInt(true); ii < nn; ii++) {
 					var slotIndex = input.readInt(true);
 					for (var iii = 0, nnn = input.readInt(true); iii < nnn; iii++) {
-						var attachment = skin.getAttachment(slotIndex, input.readStringRef());
+						var attachment = skin.getAttachment(slotIndex, input.readString());
 						var weighted = attachment.bones != null;
 						var vertices = attachment.vertices;
 						var deformLength = weighted ? vertices.length / 3 * 2 : vertices.length;
