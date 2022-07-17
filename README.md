@@ -16,4 +16,4 @@ copied from [docs](https://github.com/EsotericSoftware/spine-runtimes/blob/3.6/s
 #### cocos creator 2.1.3:
 - replace content of `cocos2d-js-min.*.js` with content of `cocos2d-js-min.fae99.js`
 
-`cocos2d-js-min.*.js` is located at `cocos-creator-project/build/*/` after you built your project
+`cocos2d-js-min.*.js` is located at `cocos-creator-project/build/*/` after the project is built
