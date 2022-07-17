@@ -13,7 +13,7 @@ this js just solves the issue
 
 copied from [docs](https://github.com/EsotericSoftware/spine-runtimes/blob/3.6/spine-ts/canvas/example/index.html#L69)
 
-#### cocos creator 2.1.3:
+#### cocos creator 2.4.6:
 - try following script inside `onLoad` function
 ```javascript
 var t="xingxiang.bin",animationName="Idle";
@@ -28,6 +28,6 @@ cc.loader.load({url:"name.atlas",ext:".txt"},function(n,r1){
   })
 })
 ```
-- replace content of `cocos2d-js-min.*.js` with content of `cocos2d-js-min.2.1.3.js`
+- replace content of `cocos2d-js-min.*.js` with content of `cocos2d-js-min.fae99.js`
 
 `cocos2d-js-min.*.js` is located at `cocos-creator-project/build/*/` after the project is built
