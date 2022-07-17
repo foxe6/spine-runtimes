@@ -12,22 +12,22 @@ function ex(spine) {
 			var input = new BinaryInput(binary);
 			skeletonData.hash = input.readString();
 			skeletonData.version = input.readString();
-			if ("3.8.75" == skeletonData.version)
-				throw new Error("Unsupported skeleton data, please export with a newer version of Spine.");
-			skeletonData.x = input.readFloat();
-			skeletonData.y = input.readFloat();
+			//if ("3.8.75" == skeletonData.version)
+			//	throw new Error("Unsupported skeleton data, please export with a newer version of Spine.");
+			//skeletonData.x = input.readFloat();
+			//skeletonData.y = input.readFloat();
 			skeletonData.width = input.readFloat();
 			skeletonData.height = input.readFloat();
 			var nonessential = input.readBoolean();
 			if (nonessential) {
 				skeletonData.fps = input.readFloat();
 				skeletonData.imagesPath = input.readString();
-				skeletonData.audioPath = input.readString();
+				//skeletonData.audioPath = input.readString();
 			}
 			var n = 0;
-			n = input.readInt(true);
-			for (var i = 0; i < n; i++)
-				input.strings.push(input.readString());
+			//n = input.readInt(true);
+			//for (var i = 0; i < n; i++)
+			//	input.strings.push(input.readString());
 			n = input.readInt(true);
 			for (var i = 0; i < n; i++) {
 				var name_2 = input.readString();
@@ -42,7 +42,7 @@ function ex(spine) {
 				data.shearY = input.readFloat();
 				data.length = input.readFloat() * scale;
 				data.transformMode = SkeletonBinary.TransformModeValues[input.readInt(true)];
-				data.skinRequired = input.readBoolean();
+				//data.skinRequired = input.readBoolean();
 				if (nonessential)
 					spine.Color.rgba8888ToColor(data.color, input.readInt32());
 				skeletonData.bones.push(data);
@@ -64,24 +64,24 @@ function ex(spine) {
 			for (var i = 0, nn = void 0; i < n; i++) {
 				var data = new spine.IkConstraintData(input.readString());
 				data.order = input.readInt(true);
-				data.skinRequired = input.readBoolean();
+				//data.skinRequired = input.readBoolean();
 				nn = input.readInt(true);
 				for (var ii = 0; ii < nn; ii++)
 					data.bones.push(skeletonData.bones[input.readInt(true)]);
 				data.target = skeletonData.bones[input.readInt(true)];
 				data.mix = input.readFloat();
-				data.softness = input.readFloat() * scale;
+				//data.softness = input.readFloat() * scale;
 				data.bendDirection = input.readByte();
-				data.compress = input.readBoolean();
-				data.stretch = input.readBoolean();
-				data.uniform = input.readBoolean();
+				//data.compress = input.readBoolean();
+				//data.stretch = input.readBoolean();
+				//data.uniform = input.readBoolean();
 				skeletonData.ikConstraints.push(data);
 			}
 			n = input.readInt(true);
 			for (var i = 0, nn = void 0; i < n; i++) {
 				var data = new spine.TransformConstraintData(input.readString());
 				data.order = input.readInt(true);
-				data.skinRequired = input.readBoolean();
+				//data.skinRequired = input.readBoolean();
 				nn = input.readInt(true);
 				for (var ii = 0; ii < nn; ii++)
 					data.bones.push(skeletonData.bones[input.readInt(true)]);
@@ -104,7 +104,7 @@ function ex(spine) {
 			for (var i = 0, nn = void 0; i < n; i++) {
 				var data = new spine.PathConstraintData(input.readString());
 				data.order = input.readInt(true);
-				data.skinRequired = input.readBoolean();
+				//data.skinRequired = input.readBoolean();
 				nn = input.readInt(true);
 				for (var ii = 0; ii < nn; ii++)
 					data.bones.push(skeletonData.bones[input.readInt(true)]);
@@ -123,7 +123,7 @@ function ex(spine) {
 				data.translateMix = input.readFloat();
 				skeletonData.pathConstraints.push(data);
 			}
-			var defaultSkin = this.readSkin(input, skeletonData, true, nonessential);
+			var defaultSkin = this.readSkin(input, skeletonData, "default", nonessential);
 			if (defaultSkin != null) {
 				skeletonData.defaultSkin = defaultSkin;
 				skeletonData.skins.push(defaultSkin);
@@ -132,7 +132,7 @@ function ex(spine) {
 				var i = skeletonData.skins.length;
 				spine.Utils.setArraySize(skeletonData.skins, n = i + input.readInt(true));
 				for (; i < n; i++)
-					skeletonData.skins[i] = this.readSkin(input, skeletonData, false, nonessential);
+					skeletonData.skins[i] = this.readSkin(input, skeletonData, input.readString(), nonessential);
 			}
 			n = this.linkedMeshes.length;
 			for (var i = 0; i < n; i++) {
@@ -143,7 +143,7 @@ function ex(spine) {
 				var parent_3 = skin.getAttachment(linkedMesh.slotIndex, linkedMesh.parent);
 				if (parent_3 == null)
 					throw new Error("Parent mesh not found: " + linkedMesh.parent);
-				linkedMesh.mesh.deformAttachment = linkedMesh.inheritDeform ? parent_3 : linkedMesh.mesh;
+				//linkedMesh.mesh.deformAttachment = linkedMesh.inheritDeform ? parent_3 : linkedMesh.mesh;
 				linkedMesh.mesh.setParentMesh(parent_3);
 				linkedMesh.mesh.updateUVs();
 			}
@@ -154,11 +154,11 @@ function ex(spine) {
 				data.intValue = input.readInt(false);
 				data.floatValue = input.readFloat();
 				data.stringValue = input.readString();
-				data.audioPath = input.readString();
-				if (data.audioPath != null) {
-					data.volume = input.readFloat();
-					data.balance = input.readFloat();
-				}
+				//data.audioPath = input.readString();
+				//if (data.audioPath != null) {
+				//	data.volume = input.readFloat();
+				//	data.balance = input.readFloat();
+				//}
 				skeletonData.events.push(data);
 			}
 			n = input.readInt(true);
@@ -167,27 +167,10 @@ function ex(spine) {
 			return skeletonData;
 		};
 		SkeletonBinary.prototype.readSkin = function (input, skeletonData, defaultSkin, nonessential) {
-			var skin = null;
-			var slotCount = 0;
-			if (defaultSkin) {
-				slotCount = input.readInt(true);
-				if (slotCount == 0)
-					return null;
-				skin = new spine.Skin("default");
-			}
-			else {
-				skin = new spine.Skin(input.readString());
-				skin.bones.length = input.readInt(true);
-				for (var i = 0, n = skin.bones.length; i < n; i++)
-					skin.bones[i] = skeletonData.bones[input.readInt(true)];
-				for (var i = 0, n = input.readInt(true); i < n; i++)
-					skin.constraints.push(skeletonData.ikConstraints[input.readInt(true)]);
-				for (var i = 0, n = input.readInt(true); i < n; i++)
-					skin.constraints.push(skeletonData.transformConstraints[input.readInt(true)]);
-				for (var i = 0, n = input.readInt(true); i < n; i++)
-					skin.constraints.push(skeletonData.pathConstraints[input.readInt(true)]);
-				slotCount = input.readInt(true);
-			}
+			var slotCount = input.readInt(true);
+			if (slotCount == 0)
+				return null;
+			var skin = new spine.Skin(defaultSkin);
 			for (var i = 0; i < slotCount; i++) {
 				var slotIndex = input.readInt(true);
 				for (var ii = 0, nn = input.readInt(true); ii < nn; ii++) {
