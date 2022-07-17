@@ -28,6 +28,6 @@ cc.loader.load({url:"name.atlas",ext:".txt"},function(n,r1){
   })
 })
 ```
-- replace content of `cocos2d-js-min.*.js` with content of `cocos2d-js-min.fae99.js`
+- replace content of `cocos2d-js-min.*.js` with content of `cocos2d-js-min.2.1.3.js`
 
 `cocos2d-js-min.*.js` is located at `cocos-creator-project/build/*/` after the project is built
